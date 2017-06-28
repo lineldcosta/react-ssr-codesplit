@@ -1,8 +1,8 @@
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux'
 import createHistory from 'history/createBrowserHistory'
 import { connectRoutes } from 'redux-first-router'
-import routes from '../common/routes'
-import navigation from '../common/state/reducers/navigation'
+import routes from './routes'
+import reducers from './state/reducers'
 
 export default function configureStore(path) {
   const history = createHistory()
@@ -11,12 +11,9 @@ export default function configureStore(path) {
     history,
     routes
   ) // notice `thunk`
-  const rootReducer = combineReducers({
-    location: reducer,
-    navigation
-  })
+
   const store = createStore(
-    rootReducer,
+    reducers({location: reducer}),
     compose(enhancer, applyMiddleware(middleware))
   )
 

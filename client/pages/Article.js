@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Link from 'redux-first-router-link'
 import { connect } from 'react-redux'
-import { closeModal } from '../../common/state/actions/navigation'
+import { closeModal } from '../state/actions/navigation'
 
 const mapStateToProps = ({ navigation }) => ({ navigation })
 const mapDispatchToProps = dispatch => ({ close: () => dispatch(closeModal()) })
