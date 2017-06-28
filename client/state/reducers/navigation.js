@@ -16,7 +16,7 @@ const navigation = (state = { top: DEFAULT_TOP }, action = {}) => {
         modal: navType[1]
       }
     default:
-      return state
+      return state;
   }
 }
 
