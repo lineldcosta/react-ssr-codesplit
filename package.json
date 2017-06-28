@@ -11,7 +11,6 @@
     "build:server": "rimraf buildServer && NODE_ENV=production webpack --progress -p --config webpack/server.prod.js",
     "clean": "rimraf buildClient buildServer",
     "precommit": "lint-staged --verbose",
-    "lint": "eslint --fix src server webpack",
     "format": "prettier --single-quote --semi=false --write '{src,server,webpack}/**/*.js' && npm run lint"
   },
   "dependencies": {
@@ -47,8 +46,8 @@
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-react": "^6.10.3",
     "extract-css-chunks-webpack-plugin": "^1.0.12",
-    "husky": "^0.13.2",
-    "lint-staged": "^3.4.0",
+    "husky": "^0.14.1",
+    "lint-staged": "^4.0.0",
     "prettier": "^1.2.2",
     "react-hot-loader": "next",
     "rimraf": "^2.6.1",
