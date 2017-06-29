@@ -1,16 +1,19 @@
 import React, { Component } from 'react'
-import Link from 'redux-first-router-link'
-import { connect } from 'react-redux'
-import { closeModal } from '../state/actions/navigation'
+import ModalLink from '../components/ModalLink'
+import SecondaryNav from '../components/SecondaryNav'
 
-const mapStateToProps = ({ navigation }) => ({ navigation })
-const mapDispatchToProps = dispatch => ({ close: () => dispatch(closeModal()) })
-
-const Article = ({close}) => (
+const Article = ({ id, close }) => (
   <div>
-    <h1>Article</h1>
-    <a onClick={close}>Close</a>
+    <SecondaryNav
+      tabs={[
+        {
+          name: 'close',
+          href: close
+        }
+      ]}
+    />
+    <h1>Article {id}</h1>
   </div>
 )
 
-export default connect(mapStateToProps, mapDispatchToProps)(Article)
+export default Article

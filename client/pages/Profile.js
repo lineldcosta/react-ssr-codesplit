@@ -1,9 +1,23 @@
 import React, { Component } from 'react'
 import Link from 'redux-first-router-link'
+import SecondaryNav from '../components/SecondaryNav'
 
 const Profile = () => (
   <div>
-    <Link href="/">Home</Link>
+    <SecondaryNav
+      tabs={[
+        {
+          name: 'profile'
+        },
+        {
+          name: 'drafts'
+        },
+        {
+          name: 'bookmarks'
+        }
+      ]}
+    />
+
   </div>
 )
 

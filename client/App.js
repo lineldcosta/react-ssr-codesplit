@@ -2,8 +2,15 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import universal from 'react-universal-component'
 import styles from './App.css'
+import TopLevelScreen from './components/TopLevelScreen'
+import ModalScreen from './components/ModalScreen'
 
-const mapStateToProps = ({ navigation }) => ({ navigation })
+const mapStateToProps = state => {
+  return {
+    random: Math.random(),
+    navigation: state.navigation
+  }
+}
 const mapDispatchToProps = dispatch => ({})
 
 const HomePage = universal(
@@ -25,7 +32,7 @@ const ProfilePage = universal(
 )
 
 const ArticlePage = universal(
-  () => import(/* webpackChunkName: 'Example' */ './pages/Article'),
+  () => import(/* webpackChunkName: 'Article' */ './pages/Article'),
   {
     resolve: () => require.resolveWeak('./pages/Article'),
     chunkName: 'Article',
@@ -33,74 +40,34 @@ const ArticlePage = universal(
   }
 )
 
-const top = ({ top }) => {
-  switch (top) {
+const getPlaceComponent = ({ place, params }, key) => {
+  let component = null
+  switch (place) {
+    case 'home':
+      component = <HomePage key={key} {...params} />
+      break
     case 'profile':
-      return <ProfilePage />
-    default:
-      return <HomePage />
-  }
-}
-
-const modal = ({ modal }) => {
-  console.log(modal)
-  switch (modal) {
+      component = <ProfilePage key={key} {...params} />
+      break
     case 'article':
-      return <ArticlePage />
+      component = <ArticlePage key={key} {...params} />
+      break
     default:
-      return null
+      component = <div key={key}>404</div>
   }
+  return params.__modal
+    ? <ModalScreen key={key}>{component}</ModalScreen>
+    : <TopLevelScreen key="top">{component}</TopLevelScreen>
 }
 
-class App extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {}
-  }
-  render() {
-    const { navigation } = this.props
-    console.log(JSON.stringify(this.props))
-    return (
-      <div>
-        {top(navigation)}
-        {modal(navigation)}
-      </div>
-    )
-  }
+const App = ({ navigation }) => {
+  return (
+    <div className={styles.root}>
+      {navigation.map((place, idx) =>
+        getPlaceComponent(place, `${place.place}_${idx}`)
+      )}
+    </div>
+  )
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)
-
-// const UniversalExample = universal(() => import(/* webpackChunkName: 'Chunk1' */ './Example'), {
-//   resolve: () => require.resolveWeak('./Example'),
-//   chunkName: 'Chunk1',
-//   minDelay: 500
-// })
-
-// export default class App extends React.Component {
-//   // set `show` to `true` to see dynamic chunks served by initial request
-//   // set `show` to `false` to test how asynchronously loaded chunks behave,
-//   // specifically how css injection is embedded in chunks + corresponding HMR
-//   state = {
-//     show: true
-//   }
-//
-//   componentDidMount() {
-//     if (this.state.show) return
-//
-//     setTimeout(() => {
-//       console.log('now showing <Example />')
-//       this.setState({ show: true })
-//     }, 1500)
-//   }
-//
-//   render() {
-//     return (
-//       <div>
-//         <h1 className={styles.title}>Hello World</h1>
-//         {this.state.show && <UniversalExample />}
-//         {!this.state.show && 'Async Component Not Requested Yet'}
-//       </div>
-//     )
-//   }
-// }
