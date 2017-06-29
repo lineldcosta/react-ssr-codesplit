@@ -1,6 +1,7 @@
 const path = require('path')
 const webpack = require('webpack')
 const ExtractCssChunks = require('extract-css-chunks-webpack-plugin')
+const AsyncPageGenPlugin = require('./async_page_gen')
 
 module.exports = {
   name: 'client',
@@ -53,6 +54,7 @@ module.exports = {
       'process.env': {
         NODE_ENV: JSON.stringify('development')
       }
-    })
+    }),
+    new AsyncPageGenPlugin()
   ]
 }
