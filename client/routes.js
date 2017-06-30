@@ -9,11 +9,26 @@ const loadArticle = id =>
   })
 
 export default {
-  home: '/',
-  notifications: '/notifications',
-  create: '/create',
-  groups: '/groups',
-  profile: '/profile',
+  home: {
+    path: '/',
+    topLevel: true
+  },
+  notifications: {
+    path: '/notifications',
+    topLevel: true
+  },
+  create: {
+    path: '/create',
+    topLevel: true
+  },
+  groups: {
+    path: '/groups',
+    topLevel: true
+  },
+  profile: {
+    path: '/profile',
+    topLevel: true
+  },
   article: {
     path: '/article/:id',
     thunk: async (dispatch, getState) => {

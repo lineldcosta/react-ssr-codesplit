@@ -7,7 +7,6 @@ const DEFAULT_PLACE = {
 }
 
 const createPlace = (action, location) => {
-  console.log('createPlace', action, location)
   return {
     place: action.type,
     params: action.payload,

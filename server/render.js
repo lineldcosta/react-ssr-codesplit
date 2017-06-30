@@ -9,6 +9,7 @@ import serialize from 'serialize-javascript'
 
 import App from '../client/App'
 import configureStore from './configureStore'
+import I18nProvider, { AVAILABLE_LANGUAGES } from '../client/I18nProvider'
 
 export default ({ clientStats, outputPath }) => async (req, res, next) => {
   const store = await configureStore(req.path)
@@ -21,7 +22,11 @@ export default ({ clientStats, outputPath }) => async (req, res, next) => {
   }
 
   const app = ReactDOM.renderToString(
-    <Provider store={store}><App /></Provider>
+    <Provider store={store}>
+      <I18nProvider browserLanguage={req.acceptsLanguages(AVAILABLE_LANGUAGES)}>
+        <App />
+      </I18nProvider>
+    </Provider>
   )
   const state = JSON.stringify(store.getState())
   const chunkNames = flushChunkNames()

@@ -1,15 +1,25 @@
 import React, { Component } from 'react'
 import Link from 'redux-first-router-link'
+import { FormattedMessage } from 'react-intl'
 
 import styles from './PrimaryNav.css'
+import routes from '../routes'
 
 const PrimaryNav = ({ currentPlace }) => (
   <ol className={styles.bar}>
-    <li><Link href="/">Home</Link></li>
-    <li><Link href="/notifications">Notifications</Link></li>
-    <li><Link href="/create">Create</Link></li>
-    <li><Link href="/groups">Groups</Link></li>
-    <li><Link href="/profile">Profile</Link></li>
+    {Object.getOwnPropertyNames(routes).reduce((result, key) => {
+      const route = routes[key]
+      if (route.topLevel) {
+        result.push(
+          <li key={key}>
+            <Link href={route.path}>
+              <FormattedMessage id={`navigation.${key}`} />
+            </Link>
+          </li>
+        )
+      }
+      return result
+    }, [])}
   </ol>
 )
 
