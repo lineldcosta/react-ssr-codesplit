@@ -30,7 +30,7 @@ AsyncPageGenPlugin.prototype.apply = function(compiler) {
             {
               resolve: () => require.resolveWeak('${filepath}'),
               chunkName: '${name}',
-              minDelay: 100
+              minDelay: 0
             }
           )
         `
@@ -38,6 +38,14 @@ AsyncPageGenPlugin.prototype.apply = function(compiler) {
     }
   })
 
+  const preload = names.reduce((result, name) => {
+    return result + `${name}.preload();`
+  }, '')
+  pages += `
+    setTimeout(()=>{
+      ${preload}
+    },2000)
+  `
   fs.writeFileSync(path.join(PAGES_DIR, 'index.js'), pages)
 }
 

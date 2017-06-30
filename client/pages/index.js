@@ -17,7 +17,7 @@ export const article = universal(
         '/Users/steve/dev/NewsSocial/newssocial/client/pages/Article.js'
       ),
     chunkName: 'Article',
-    minDelay: 100
+    minDelay: 0
   }
 )
 
@@ -32,7 +32,7 @@ export const create = universal(
         '/Users/steve/dev/NewsSocial/newssocial/client/pages/Create.js'
       ),
     chunkName: 'Create',
-    minDelay: 100
+    minDelay: 0
   }
 )
 
@@ -47,7 +47,7 @@ export const groups = universal(
         '/Users/steve/dev/NewsSocial/newssocial/client/pages/Groups.js'
       ),
     chunkName: 'Groups',
-    minDelay: 100
+    minDelay: 0
   }
 )
 
@@ -62,7 +62,7 @@ export const home = universal(
         '/Users/steve/dev/NewsSocial/newssocial/client/pages/Home.js'
       ),
     chunkName: 'Home',
-    minDelay: 100
+    minDelay: 0
   }
 )
 
@@ -77,7 +77,7 @@ export const notifications = universal(
         '/Users/steve/dev/NewsSocial/newssocial/client/pages/Notifications.js'
       ),
     chunkName: 'Notifications',
-    minDelay: 100
+    minDelay: 0
   }
 )
 
@@ -92,6 +92,15 @@ export const profile = universal(
         '/Users/steve/dev/NewsSocial/newssocial/client/pages/Profile.js'
       ),
     chunkName: 'Profile',
-    minDelay: 100
+    minDelay: 0
   }
 )
+
+setTimeout(() => {
+  article.preload()
+  create.preload()
+  groups.preload()
+  home.preload()
+  notifications.preload()
+  profile.preload()
+}, 2000)
